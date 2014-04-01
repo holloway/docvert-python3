@@ -11,7 +11,6 @@ class Loop(pipeline_item.pipeline_stage):
     def stage(self, pipeline_value):
         if 'numberOfTimes' not in self.attributes:
             raise no_number_of_times_attribute("In process Loop there wasn't a numberOfTimes attribute.")
-        
         numberOfTimes = self.attributes['numberOfTimes']
         if numberOfTimes.startswith('xpathCount:'):
             xpath = numberOfTimes[len('xpathCount:'):]
@@ -30,7 +29,7 @@ class Loop(pipeline_item.pipeline_stage):
                 child_depth = copy.copy(self.depth)
                 child_depth.append(str(index))
                 pipeline = core.docvert_pipeline.pipeline_processor(self.storage, self.child_stages, self.pipeline_directory, self.pipeline_storage_prefix, child_depth)
-                child_pipeline_value = lxml.etree.tostring(pipeline_value)
+                child_pipeline_value = lxml.etree.tostring(pipeline_value).decode('utf-8')
                 pipeline.start(child_pipeline_value) #discard return value
         elif numberOfTimes.startswith('substring:'):
             number = int(numberOfTimes[len('substring:'):])

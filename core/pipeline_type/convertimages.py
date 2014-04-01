@@ -4,7 +4,7 @@ import os.path
 import tempfile
 import io
 import subprocess
-import Image # Python PIL
+from PIL import Image # Python PIL
 from . import pipeline_item
 import core.docvert_xml
 import core.opendocument

@@ -2,6 +2,7 @@
 from . import docvert_exception
 import lxml.etree
 import xml.sax.saxutils
+import re
 
 def transform(data, xslt, params=None):
     if params is None:
@@ -31,7 +32,7 @@ def get_document(data):
         data.seek(0)
         return lxml.etree.XML(data.read())
     elif data[0:1] == "/" or data[0:1] == "\\": #path
-        return lxml.etree.XML(file(data).read())
+        return lxml.etree.XML(strip_encoding_declaration(open(data).read()))
     elif data[0:1] == "<": #xml
         return lxml.etree.XML(data)
     else: #last ditch attempt...
@@ -42,3 +43,9 @@ def convert_dict_to_params(params):
     for key in list(params.keys()):
         params[key] = "'%s'" % params[key]
     return params
+
+def file_as_string(path):
+    pass
+
+def strip_encoding_declaration(xml_string):
+    return re.sub('<\?.*?\?>','<?xml version="1.0"?>', xml_string)

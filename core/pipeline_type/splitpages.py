@@ -14,6 +14,7 @@ class SplitPages(pipeline_item.pipeline_stage):
             customFilenameSection = 'section#.html'
         )
         xslt_path = self.resolve_pipeline_resource('internal://each-page.xsl')
+        
         return core.docvert_xml.transform(pipeline_value, xslt_path, params)
 
 

@@ -12,7 +12,7 @@ from . import opendocument
 import urllib.request, urllib.error, urllib.parse
 
 docvert_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-version = '5.1'
+version = '6'
 http_timeout = 10
 
 class converter_type(object):
