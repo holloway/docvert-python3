@@ -8,12 +8,12 @@ This is Docvert for Python 3. It is beta quality. To find Docvert for Python 2.x
 Web Service
 -----------
 
-    python ./docvert-web.py [-p PORT] [-H host]
+    python3 ./docvert-web.py [-p PORT] [-H host]
 
 Command Line
 ------------
 
-    python ./docvert-cli.py
+    python3 ./docvert-cli.py
 
     usage: docvert-cli.py [-h] [--version] --pipeline PIPELINE
         [--response {auto,path,stdout}]
