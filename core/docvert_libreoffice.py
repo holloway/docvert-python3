@@ -65,17 +65,13 @@ class libreoffice_client(object):
         self._desktop = context.ServiceManager.createInstanceWithContext("com.sun.star.frame.Desktop", context)
 
     def convert_by_stream(self, data, format=LIBREOFFICE_OPEN_DOCUMENT):
-        print(data)
         input_stream = self._service_manager.createInstanceWithContext("com.sun.star.io.SequenceInputStream", self._local_context)
         data.seek(0)
         input_stream.initialize((uno.ByteSequence(data.read()),)) 
-        document = self._desktop.loadComponentFromURL('private:stream', "_blank", 0, self._to_properties(InputStream=input_stream,ReadOnly=True))
+        document = self._desktop.loadComponentFromURL('private:stream', "_blank", 0, self._to_properties(InputStream=input_stream))
         if not document:
             raise Exception("Error making document")
-        try:
-            document.refresh()
-        except AttributeError:
-            pass
+
         output_stream = output_stream_wrapper()
         try:
             document.storeToURL('private:stream', self._to_properties(OutputStream=output_stream, FilterName=format))
@@ -83,7 +79,6 @@ class libreoffice_client(object):
             pass
         finally:
             document.close(True)
-        
         if format == LIBREOFFICE_OPEN_DOCUMENT or format == LIBREOFFICE_PDF:
             doc_type = document_type.detect_document_type(output_stream.data)
             output_stream.data.seek(0)
