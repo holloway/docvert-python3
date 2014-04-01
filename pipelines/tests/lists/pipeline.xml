@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline>
+    <stage process="Generate" withFile="sample-document.doc"/>
+    <stage process="Test" withFile="sample-document.txt" prefix="1. Pre-normalized OpenDocument"/>
+
+    <stage process="TransformOpenDocumentToDocBook"/>
+    <stage process="Test" withFile="sample-document.xsl" prefix="1. Pre-normalized OpenDocument"/>
+
+    <stage process="Test" withFile="sample-document.txt" prefix="1. DocBook"/>
+
+
+    <stage process="Test" withFile="sample-document-docbook-lists.txt" prefix="1. DocBook"/>
+
+    <stage process="DocBookToXHTML"/>
+    <stage process="Test" withFile="sample-document-html-lists.txt" prefix="1. HTML"/>
+    <stage process="Test" withFile="sample-document.txt" prefix="1. HTML"/>
+
+    <stage process="Generate" withFile="docvert-test-five.odt"/>
+    <stage process="Test" withFile="docvert-test-five.txt" prefix="2. Pre-normalized OpenDocument"/>
+    <stage process="TransformOpenDocumentToDocBook"/>
+    <stage process="Test" withFile="docvert-test-five.txt" prefix="2. DocBook"/>
+    <stage process="DocBookToXHTML"/>
+    <stage process="Test" withFile="docvert-test-five.txt" prefix="2. HTML"/>
+
+    <stage process="Generate" withFile="table-list.odt"/>
+    <stage process="Test" withFile="table-list.txt" prefix="3. Pre-normalized OpenDocument"/>
+    <stage process="TransformOpenDocumentToDocBook"/>
+    <stage process="Test" withFile="table-list.txt" prefix="3. DocBook"/>
+    <stage process="DocBookToXHTML"/>
+    <stage process="Test" withFile="table-list.txt" prefix="3. HTML"/>
+
+    <stage process="Generate" withFile="continuation.odt"/>
+    <stage process="TransformOpenDocumentToDocBook"/>
+    <stage process="DocBookToXHTML"/>
+    <stage process="Test" withFile="continuation.xsl" prefix="HTML list continuations"/>
+
+
+    <stage process="Generate" withFile="docvert-test-five-new.odt"/>
+    <stage process="Test" withFile="docvert-test-five-new.txt" prefix="4. Pre-normalized OpenDocument"/>
+    <stage process="TransformOpenDocumentToDocBook" />
+    <stage process="Test" withFile="docvert-test-five-new.txt" prefix="4. DocBook"/>
+    <stage process="DocBookToXHTML"/>
+    <stage process="Test" withFile="docvert-test-five-new.txt" prefix="4. HTML"/>
+<!-- <stage process="Debug"/> -->
+<!-- <stage process="Debug" contentType="text/html"/> -->
+
+
+</pipeline>

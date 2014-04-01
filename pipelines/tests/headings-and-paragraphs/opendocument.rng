@@ -1,0 +1,7 @@
+<element name="text:p" xmlns="http://relaxng.org/ns/structure/1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0">
+  <zeroOrMore>
+     <element name="b">
+       <text />
+     </element>
+  </zeroOrMore>
+</element>
