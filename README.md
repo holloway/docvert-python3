@@ -44,7 +44,7 @@ Requirements
 Quickstart Guide
 ----------------
 
-    sudo apt-get install libreoffice python3-uno python-lxml python3-imaging pdf2svg librsvg2-2
+    sudo apt-get install libreoffice python3-uno python-lxml python3-imaging pdf2svg librsvg2-2 librsvg2-bin
 
     /usr/bin/soffice --headless --norestore --nologo --norestore --nofirststartwizard --accept="socket,port=2002;urp;"
 

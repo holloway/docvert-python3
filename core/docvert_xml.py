@@ -36,7 +36,7 @@ def get_document(data):
     elif data[0:1] == "<": #xml
         return lxml.etree.XML(data)
     else: #last ditch attempt...
-        return lxml.etree.XML(str(data))
+        return lxml.etree.XML(data)
     raise docvert_exception.unable_to_generate_xml_document()
 
 def convert_dict_to_params(params):

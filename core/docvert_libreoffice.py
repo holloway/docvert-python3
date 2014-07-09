@@ -66,19 +66,43 @@ class libreoffice_client(object):
 
     def convert_by_stream(self, data, format=LIBREOFFICE_OPEN_DOCUMENT):
         input_stream = self._service_manager.createInstanceWithContext("com.sun.star.io.SequenceInputStream", self._local_context)
+
+        
+        data.seek(0)
+        print(data, format)
+        print(data.read(100))
+        data.seek(0)
+        handle = open('/tmp/what', 'wb')
+        handle.write(data.read())
+
+
         data.seek(0)
         input_stream.initialize((uno.ByteSequence(data.read()),)) 
-        document = self._desktop.loadComponentFromURL('private:stream', "_blank", 0, self._to_properties(InputStream=input_stream))
+        #try:
+        document = self._desktop.loadComponentFromURL('private:stream', "_blank", 8, self._to_properties(InputStream=input_stream))
+
+        try:
+            document.refresh()
+        except AttributeError:
+            pass
+
+        #except Exception as e:
+        #    print("Lost connection to LibreOffice. Trying to reconnect...")
+        #    self.__init__(); #try to reconnect
+        #    document = self._desktop.loadComponentFromURL('private:stream', "_blank", 0, self._to_properties(InputStream=input_stream))
         if not document:
             raise Exception("Error making document")
 
+        input_stream.closeInput()
         output_stream = output_stream_wrapper()
-        try:
-            document.storeToURL('private:stream', self._to_properties(OutputStream=output_stream, FilterName=format))
-        except Exception as e: #ignore any error, verify the output before complaining
-            pass
-        finally:
-            document.close(True)
+        #try:
+        document.storeToURL('private:stream', self._to_properties(OutputStream=output_stream, FilterName=format, Hidden=True))
+        #except Exception as e: #ignore any error, verify the output before complaining
+        #print(e)
+        #    pass
+        #finally:
+        #    document.close(True)
+        #    pass
         if format == LIBREOFFICE_OPEN_DOCUMENT or format == LIBREOFFICE_PDF:
             doc_type = document_type.detect_document_type(output_stream.data)
             output_stream.data.seek(0)

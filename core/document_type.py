@@ -25,6 +25,8 @@ def detect_document_type(data):
             archive = zipfile.ZipFile(data)
             if 'mimetype' in archive.namelist() and archive.read('mimetype').decode('utf-8') == 'application/vnd.oasis.opendocument.text': # ...if it doesn't have these files it's not an OpenDocument
                 return types.oasis_open_document
+    except UnicodeDecodeError as e:
+        pass
     except Exception as e:
         print(e)
     # 2. Sniff for PDF
@@ -34,6 +36,8 @@ def detect_document_type(data):
         first_bytes = data.read(len(magic_bytes_pdf)).decode('latin-1')
         if first_bytes == magic_bytes_pdf:
             return types.pdf
+    except UnicodeDecodeError as e:
+        pass
     except Exception as e:
         print(e)
     # 3. Sniff for HTML and XML
@@ -46,6 +50,8 @@ def detect_document_type(data):
             return types.html
         if first_bytes.count("<?xml") > 0:
             return types.xml
+    except UnicodeDecodeError as e:
+        pass
     except Exception as e:
         print(e)
    

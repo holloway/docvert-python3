@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import os.path
-import lxml.etree
 import io
 from . import pipeline_item
 import core.docvert
@@ -16,8 +15,10 @@ class Generate(pipeline_item.pipeline_stage):
         path = self.resolve_pipeline_resource(self.attributes['withFile'])
         if not os.path.exists(path):
             raise generation_file_not_found("A process type of Generate couldn't find a file at %s" % path)
-        data = file(path)
+        #print(path)
+        data = open(path, mode='rb')
         doc_type = core.document_type.detect_document_type(data)
+        #print(doc_type)
         if doc_type != core.document_type.types.oasis_open_document:
             data = core.docvert.generate_open_document(data)
         document_xml = core.opendocument.extract_useful_open_document_files(data, self.storage, os.path.basename(path))

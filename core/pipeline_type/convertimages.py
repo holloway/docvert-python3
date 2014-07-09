@@ -213,8 +213,11 @@ class ConvertImages(pipeline_item.pipeline_stage):
         temporary_to_path = None
         try:
             os_handle, temporary_from_path = tempfile.mkstemp()
-            temporary_from_file = open(temporary_from_path, 'w')
-            temporary_from_file.write(get_value(self.storage[from_storage_path]))
+            temporary_from_file = open(temporary_from_path, 'wb')
+            the_value = get_value(self.storage[from_storage_path])
+            if hasattr(the_value, 'encode'):
+                the_value = the_value.encode('utf-8')
+            temporary_from_file.write(the_value);
             temporary_from_file.flush()
             temporary_from_file.close()
             os_handle, temporary_to_path = tempfile.mkstemp()
@@ -222,7 +225,7 @@ class ConvertImages(pipeline_item.pipeline_stage):
             std_response = subprocess.getstatusoutput(command)
             if os.path.getsize(temporary_to_path) == 0:
                 raise Exception('Error in convertimages.py: No output data created. Command was "%s" which returned "%s"' % (command_template, std_response))
-            temporary_to = open(temporary_to_path, 'r')
+            temporary_to = open(temporary_to_path, 'rb')
             to_data = temporary_to.read()
             temporary_to.close()
             return to_data

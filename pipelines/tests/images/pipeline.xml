@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pipeline>
-    <stage process="Generate" withFile="emf-sample.doc"/>
+    <stage process="Generate" withFile="emf-sample.odt"/>
     <stage process="ConvertImages" formats="emf2png"/>
     <stage process="Test" extensionExist=".png" extensionExistCount="5"/><!-- total images is now 5 -->
+</pipeline>
+<!-- 
 
     <stage process="Generate" withFile="wmf-sample.doc"/>
     <stage process="ConvertImages" formats="wmf2png"/>
-    <stage process="Test" extensionExist=".png" extensionExistCount="6"/><!-- total images is now 6 -->
-
-</pipeline>
+    <stage process="Test" extensionExist=".png" extensionExistCount="6"/> total images now six
+-->
