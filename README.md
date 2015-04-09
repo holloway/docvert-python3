@@ -5,7 +5,7 @@
 
 Converts Word Processor office files (e.g. .DOC files) to OpenDocument, DocBook, and structured HTML.
 
-This is Docvert for Python 3. It is beta quality. To find Docvert for Python 2.x see http://github.com/holloway/docvert/
+This is Docvert for Python 3. To find Docvert for Python 2.x see http://github.com/holloway/docvert/
 
 Web Service
 -----------
