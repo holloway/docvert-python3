@@ -32,7 +32,7 @@ class PrintPipelines(argparse.Action):
 
 parser = argparse.ArgumentParser(description='Converts Office files to OpenDocument, DocBook and HTML.', epilog='E.g.: ./docvert-cli.py doc/sample/sample-document.doc -p="web standards"')
 parser.add_argument('--version', '-v', action='version', version='Docvert %s' % version)
-parser.add_argument('infile', type=file, help='Path or Stdin of Office file to convert', default=sys.stdin, nargs='+')
+parser.add_argument('infile', nargs='?', type=argparse.FileType('rb'), help='Path or Stdin of Office file to convert', default=sys.stdin.buffer    )
 parser.add_argument('--pipeline', '-p', help='Pipeline you wish to use.', required=True)
 parser.add_argument('--response', '-r', help='Format of ZIP conversion response.', default='auto', choices=['auto','path','stdout'])
 parser.add_argument('--autopipeline', '-a', help='AutoPipeline to use (when your pipeline requires it).', default=default_auto_pipeline, choices=auto_pipelines)
@@ -43,6 +43,8 @@ parser.add_argument('--pipelinetype', '-t', help='Pipeline type you wish to use.
 args = parser.parse_args() #stops here if there were no args or if they asked for --help
 
 def process_commands(filesdata, pipeline_id, pipeline_type, auto_pipeline_id, after_conversion, url):
+    if hasattr(filesdata, 'read'):
+        filesdata = [io.BytesIO(filesdata.read())]
     docvert_4_default = '.default'
     if auto_pipeline_id and auto_pipeline_id.endswith(docvert_4_default):
         auto_pipeline_id = auto_pipeline_id[0:-len(docvert_4_default)]
@@ -63,13 +65,12 @@ def process_commands(filesdata, pipeline_id, pipeline_type, auto_pipeline_id, af
         print(response.to_zip().getvalue(), file=sys.stdout)
         exit()
     os_handle, zip_path = tempfile.mkstemp()
-    zip_handler = open(zip_path, 'w')
+    zip_handler = open(zip_path, 'wb')
     zip_handler.write(response.to_zip().getvalue())
     zip_handler.close()
     os.rename(zip_path, "%s.zip" % zip_path)
     print("Success! ZIP conversion at: %s.zip" % zip_path)
 
 
-   
-process_commands(args.infile, args.pipeline, args.pipelinetype, args.autopipeline, args.response, args.url)
 
+process_commands(args.infile, args.pipeline, args.pipelinetype, args.autopipeline, args.response, args.url)
