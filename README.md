@@ -40,11 +40,11 @@ Requirements
     python-imaging
     pdf2svg
     librsvg2-2
-    
+
 Quickstart Guide
 ----------------
 
-    sudo apt-get install libreoffice python3-uno python-lxml python3-imaging pdf2svg librsvg2-2 librsvg2-bin
+    sudo apt-get install libreoffice python3-uno python3-lxml python3-imaging pdf2svg librsvg2-2 librsvg2-bin
 
     /usr/bin/soffice --headless --norestore --nologo --norestore --nofirststartwizard --accept="socket,port=2002;urp;"
 
@@ -64,5 +64,3 @@ and browse to http://localhost:8080
 LICENCE
 -------
 Released under the GPL3 see LICENCE
-
-
