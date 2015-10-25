@@ -36,8 +36,8 @@ Requirements
     Python 3
     libreoffice
     python3-uno
-    python-lxml
-    python-imaging
+    python3-lxml
+    python3-imaging
     pdf2svg
     librsvg2-2
 
